@@ -8,8 +8,9 @@ const buildToken = (user) =>
 
 const cookieOptions = {
   httpOnly: true,
-  sameSite: 'none',
-  secure: true
+  sameSite: 'strict',
+  secure: true,
+  maxAge: 3600000 // 1 hour in milliseconds
 };
 
 exports.register = async (req, res) => {
