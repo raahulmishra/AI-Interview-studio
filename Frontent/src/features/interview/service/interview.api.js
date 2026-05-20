@@ -6,7 +6,7 @@ const api = axios.create({
 });
 
 const handleApiError = (error, fallbackMessage) => {
-  const message = error.response?.data?.error || fallbackMessage;
+  const message = error.response?.data?.error || error.response?.data?.message || fallbackMessage;
   throw new Error(message);
 };
 
