@@ -8,7 +8,7 @@ const buildToken = (user) =>
 
 const cookieOptions = {
   httpOnly: true,
-  sameSite: 'strict',
+  sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
   secure: true,
   maxAge: 3600000 // 1 hour in milliseconds
 };
@@ -105,7 +105,8 @@ exports.login = async (req, res) => {
 
 exports.logout = async (req, res) => {
   try {
-    const token = req.cookies.token;
+    const authHeader = req.headers.authorization || '';
+    const token = req.cookies.token || (authHeader.startsWith('Bearer ') ? authHeader.slice(7) : null);
 
     if (!token) {
       return res.status(400).json({ message: 'No token found' });
@@ -113,7 +114,7 @@ exports.logout = async (req, res) => {
 
     const blacklistToken = new BlacklistToken({ token });
     await blacklistToken.save();
-    res.clearCookie('token');
+    res.clearCookie('token', cookieOptions);
 
     return res.status(200).json({ message: 'User logged out successfully' });
   } catch (error) {

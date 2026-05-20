@@ -6,6 +6,16 @@ const API = axios.create({
   withCredentials: true,
 });
 
+API.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+
+  return config;
+});
+
 // Register
 export const register = async ({ name, email, password, role }) => {
   try {
@@ -69,7 +79,6 @@ const handleError = (error, type) => {
   console.error(`${type} error:`, message);
   throw new Error(message);
 };
-
 
 
 

@@ -2,7 +2,8 @@ const jwt = require('jsonwebtoken');
 const BlacklistToken = require('../models/blacklist.model');
 
 async function authUser(req, res, next){
-    const token = req.cookies.token;
+    const authHeader = req.headers.authorization || '';
+    const token = req.cookies.token || (authHeader.startsWith('Bearer ') ? authHeader.slice(7) : null);
     if(!token){
         return res.status(401).json({message: "No token found"});
     }

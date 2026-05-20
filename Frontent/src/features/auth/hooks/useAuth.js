@@ -11,6 +11,7 @@ export const useAuth = () => {
       const data = await login({ email, password });
       setUser(data.user);
       localStorage.setItem('user', JSON.stringify(data.user));
+      localStorage.setItem('token', data.token);
       return data;
     } finally {
       setIsLoading(false);
@@ -23,6 +24,7 @@ export const useAuth = () => {
       const data = await register({ name, email, password, role });
       setUser(data.user);
       localStorage.setItem('user', JSON.stringify(data.user));
+      localStorage.setItem('token', data.token);
       return data;
     } finally {
       setIsLoading(false);
@@ -33,9 +35,10 @@ export const useAuth = () => {
     setIsLoading(true);
     try {
       await logout();
+    } finally {
       setUser(null);
       localStorage.removeItem('user');
-    } finally {
+      localStorage.removeItem('token');
       setIsLoading(false);
     }
   };

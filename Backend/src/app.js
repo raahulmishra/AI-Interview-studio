@@ -14,6 +14,7 @@ const allowedOrigins = [
 app.use(cors({
     origin: allowedOrigins, // frontend URLs
     credentials: true, // allow cookies to be sent
+    allowedHeaders: ['Content-Type', 'Authorization'],
 }))
 /* require all routes*/
 const authRouter = require('./routes/authRouter');
