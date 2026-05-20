@@ -49,7 +49,7 @@ exports.genrateinterViewReport = async (req, res) => {
 
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: "Something went wrong" });
+        res.status(500).json({ error: error.message || "Something went wrong" });
     } finally {
         if (parser) {
             await parser.destroy().catch(() => {});

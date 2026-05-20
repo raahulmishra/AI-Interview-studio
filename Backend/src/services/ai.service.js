@@ -93,7 +93,7 @@ ${selfDescription}
 `;
 
     const response = await genai.models.generateContent({
-      model: 'gemini-3-flash-preview',
+      model: process.env.GEMINI_MODEL || 'gemini-2.5-flash',
       contents: prompt,
       config: {
         responseMimeType: 'application/json'
