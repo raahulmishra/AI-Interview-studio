@@ -8,6 +8,7 @@ app.use(cookieParser()) // to parse the cookie from the request
 const allowedOrigins = [
     'http://localhost:5173',
     'http://localhost:5174',
+    'https://ai-interview-studio-phi.vercel.app',
 ];
 
 app.use(cors({
